@@ -1,0 +1,21 @@
+data_path: data/corpus/msrvtt.txt
+num_adapt_samples: -1 # use all samples
+
+clip_arch: ViT-B/16
+clip_root: data/checkpoints
+
+text_model: data/checkpoints/bert-base-uncased # use this model's vocabulary
+# text_model: data/checkpoints/bert-base-multilingual-cased # use this model's vocabulary
+# decoder_config: configs/L12_H12_D768.json
+# init_with_bert: True
+decoder_config: configs/L6_H8_D512.json
+init_with_bert: False
+
+label_smoothing: 0.1
+batch_size: 32
+num_workers: 4
+max_tokens: 40
+
+## Other Settings
+optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 1}
+schedular: {sched: fix, lr: 1e-4, num_warmup_steps: 0.1, epochs: 10}

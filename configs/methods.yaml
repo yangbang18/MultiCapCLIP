@@ -1,0 +1,62 @@
+baseline:
+  add_cross_attention: True
+  normalize: True
+base_CP:
+  inherit_from: baseline
+  concepts: True
+  n_concept_prompts: 16
+  ConceptPromptPrefixer: True
+  exclude_from_visual_features: True
+  concept_fn: concepts.txt
+base_IA:
+  inherit_from: baseline
+  with_related_caption_as_input: True
+  related_caption_topk: 5
+base_FA_01:
+  inherit_from: baseline
+  noise_std: 0.1
+base_FA_001:
+  inherit_from: baseline
+  noise_std: 0.01
+base_IA_FA_01:
+  inherit_from: [base_IA, base_FA_01]
+base_IA_FA_001:
+  inherit_from: [base_IA, base_FA_001]
+MultiCapCLIP_01:
+  inherit_from: [base_CP, base_IA, base_FA_01]
+MultiCapCLIP_001:
+  inherit_from: [base_CP, base_IA, base_FA_001]
+
+# Ablations on K
+MultiCapCLIP_01_K4:
+  inherit_from: MultiCapCLIP_01
+  n_concept_prompts: 4
+MultiCapCLIP_01_K8:
+  inherit_from: MultiCapCLIP_01
+  n_concept_prompts: 8
+MultiCapCLIP_01_K32:
+  inherit_from: MultiCapCLIP_01
+  n_concept_prompts: 32
+MultiCapCLIP_001_K4:
+  inherit_from: MultiCapCLIP_001
+  n_concept_prompts: 4
+MultiCapCLIP_001_K8:
+  inherit_from: MultiCapCLIP_001
+  n_concept_prompts: 8
+MultiCapCLIP_001_K32:
+  inherit_from: MultiCapCLIP_001
+  n_concept_prompts: 32
+
+# Ablations on Concept Type
+MultiCapCLIP_01_V:
+  inherit_from: MultiCapCLIP_01
+  concept_fn: verbs.txt
+MultiCapCLIP_01_NV:
+  inherit_from: MultiCapCLIP_01
+  concept_fn: concepts_with_verbs.txt
+MultiCapCLIP_001_V:
+  inherit_from: MultiCapCLIP_001
+  concept_fn: verbs.txt
+MultiCapCLIP_001_NV:
+  inherit_from: MultiCapCLIP_001
+  concept_fn: concepts_with_verbs.txt

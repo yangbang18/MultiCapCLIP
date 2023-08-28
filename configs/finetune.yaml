@@ -1,0 +1,25 @@
+clip_arch: ViT-B/16
+clip_root: data/checkpoints
+
+text_model: data/checkpoints/bert-base-uncased # use this model's vocabulary
+# text_model: data/checkpoints/bert-base-multilingual-cased # use this model's vocabulary
+decoder_config: configs/L6_H8_D512.json
+init_with_bert: False
+
+## Training
+label_smoothing: 0.1
+batch_size_train: 32
+batch_size_test: 32
+num_workers: 4
+max_tokens: 40
+
+## generation configs, following blip
+max_length: 20
+min_length: 5
+num_beams: 3
+prompt: ''
+
+## Other Settings
+optimizer: {opt: adamW, lr: 1e-4, weight_decay: 0.01, lr_mult: 1} # lr_mult will not take effect
+schedular: {sched: fix, lr: 1e-4, epochs: 10, num_warmup_steps: 0.1}
+start_eval: 0  # epoch index

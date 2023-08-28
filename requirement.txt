@@ -1,0 +1,23 @@
+torch
+torchvision
+transformers==4.12.5
+ftfy
+ruamel_yaml
+decord
+pandas
+h5py		        
+wget
+psutil
+
+# for evaluations on visual captioning
+pycocoevalcap
+pycocotools
+
+# for visual captioning in Chinese
+jieba
+
+# for visual captioning in German or in French
+stanfordcorenlp==3.9.1.1
+
+# for extracting concepts (noun phrases)
+spacy
