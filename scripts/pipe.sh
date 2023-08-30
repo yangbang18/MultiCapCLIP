@@ -17,8 +17,8 @@ echo "tasks: $tasks"
 echo "datasets for evaluation: $ValDatasets"
 
 
-if [[ "${tasks[@]}" =~ "finetune" ]]; then
-python finetune.py --pickle --dataset ${dataset} --method ${method} $FTcmd
+if [[ "${tasks[@]}" =~ "finetune" && ! "${tasks[@]}" =~ "finetune_" ]]; then
+python3 finetune.py --pickle --dataset ${dataset} --method ${method} $FTcmd
 
 src=output/finetune/vit-b-16_${dataset}_${method}
 trg=${src}/${dataset}_subsets/100%
@@ -30,14 +30,14 @@ if [[ "${tasks[@]}" =~ "finetune_fewshot" ]]; then
 bash scripts/ft_fewshot.sh ${dataset} ${method} $FTcmd
 fi
 
-if [[ "${tasks[@]}" =~ "adapt" ]]; then
-python adapt.py --pickle --dataset ${dataset} --method ${method} $ADcmd
+if [[ "${tasks[@]}" =~ "adapt" && ! "${tasks[@]}" =~ "adapt_" ]]; then
+python3 adapt.py --pickle --dataset ${dataset} --method ${method} $ADcmd
 fi
 
 if [[ "${tasks[@]}" =~ "adapt_zeroshot" ]]; then
 for ValDataset in $ValDatasets
 do
-python loop_evaluate.py --from_pretrained output/adapt/${alias}_${dataset}_${method} --dataset ${ValDataset} --folder ${ValDataset}_subsets/0% $FTcmd
+python3 loop_evaluate.py --from_pretrained output/adapt/${alias}_${dataset}_${method} --dataset ${ValDataset} --folder ${ValDataset}_subsets/0% $FTcmd
 done
 fi
 
