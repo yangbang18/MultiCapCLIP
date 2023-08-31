@@ -17,10 +17,17 @@ echo "tasks: $tasks"
 echo "datasets for evaluation: $ValDatasets"
 
 
-if [[ "${tasks[@]}" =~ "finetune" && ! "${tasks[@]}" =~ "finetune_" ]]; then
+if [[ "${tasks[@]}" =~ "finetune " || 
+      ("${tasks[@]}" =~ " finetune" && ! "${tasks[@]}" =~ "finetune_") ||
+      ("${tasks[@]}" =~ "finetune" && ! "${tasks[@]}" =~ "finetune_") 
+      ]]; then
 python3 finetune.py --pickle --dataset ${dataset} --method ${method} $FTcmd
 
-src=output/finetune/vit-b-16_${dataset}_${method}
+if [[ $FTcmd =~ "--separate_logs" ]]; then
+    src=logs/finetune/vit-b-16_${dataset}_${method}
+else
+    src=output/finetune/vit-b-16_${dataset}_${method}
+fi
 trg=${src}/${dataset}_subsets/100%
 mkdir -p ${trg}
 cp ${src}/log.txt ${trg}/log.txt
@@ -30,7 +37,10 @@ if [[ "${tasks[@]}" =~ "finetune_fewshot" ]]; then
 bash scripts/ft_fewshot.sh ${dataset} ${method} $FTcmd
 fi
 
-if [[ "${tasks[@]}" =~ "adapt" && ! "${tasks[@]}" =~ "adapt_" ]]; then
+if [[ "${tasks[@]}" =~ "adapt " || 
+      ("${tasks[@]}" =~ " adapt" && ! "${tasks[@]}" =~ "adapt_") ||
+      ("${tasks[@]}" =~ "adapt" && ! "${tasks[@]}" =~ "adapt_") 
+      ]]; then
 python3 adapt.py --pickle --dataset ${dataset} --method ${method} $ADcmd
 fi
 
