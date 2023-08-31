@@ -21,53 +21,58 @@ if [[ "${tasks[@]}" =~ "finetune " ||
       ("${tasks[@]}" =~ " finetune" && ! "${tasks[@]}" =~ "finetune_") ||
       ("${tasks[@]}" =~ "finetune" && ! "${tasks[@]}" =~ "finetune_") 
       ]]; then
-python3 finetune.py --pickle --dataset ${dataset} --method ${method} $FTcmd
-
-if [[ $FTcmd =~ "--separate_logs" ]]; then
-    src=logs/finetune/vit-b-16_${dataset}_${method}
-else
+    python3 finetune.py --pickle --dataset ${dataset} --method ${method} $FTcmd
     src=output/finetune/vit-b-16_${dataset}_${method}
+    trg=${src}/${dataset}_subsets/100%
+    mkdir -p ${trg}
+    cp ${src}/log.txt ${trg}/log.txt
 fi
-trg=${src}/${dataset}_subsets/100%
-mkdir -p ${trg}
-cp ${src}/log.txt ${trg}/log.txt
-fi
+
 
 if [[ "${tasks[@]}" =~ "finetune_fewshot" ]]; then
-bash scripts/ft_fewshot.sh ${dataset} ${method} $FTcmd
+    bash scripts/ft_fewshot.sh ${dataset} ${method} $FTcmd
 fi
+
 
 if [[ "${tasks[@]}" =~ "adapt " || 
       ("${tasks[@]}" =~ " adapt" && ! "${tasks[@]}" =~ "adapt_") ||
       ("${tasks[@]}" =~ "adapt" && ! "${tasks[@]}" =~ "adapt_") 
       ]]; then
-python3 adapt.py --pickle --dataset ${dataset} --method ${method} $ADcmd
+    python3 adapt.py --pickle --dataset ${dataset} --method ${method} $ADcmd
 fi
+
 
 if [[ "${tasks[@]}" =~ "adapt_zeroshot" ]]; then
-for ValDataset in $ValDatasets
-do
-python3 loop_evaluate.py --from_pretrained output/adapt/${alias}_${dataset}_${method} --dataset ${ValDataset} --folder ${ValDataset}_subsets/0% $FTcmd
-done
+    for ValDataset in $ValDatasets
+    do
+        python3 loop_evaluate.py \
+                --pickle \
+                --from_pretrained output/adapt/${alias}_${dataset}_${method} \
+                --dataset ${ValDataset} \
+                --folder ${ValDataset}_subsets/0% \
+                $FTcmd
+    done
 fi
+
 
 if [[ "${tasks[@]}" =~ "adapt_fewshot" ]]; then
-for ValDataset in $ValDatasets
-do
-bash scripts/ablate_fewshot.sh output/adapt/${alias}_${dataset}_${method} ${ValDataset} $FTcmd
-done
+    for ValDataset in $ValDatasets
+    do
+        bash scripts/ablate_fewshot.sh output/adapt/${alias}_${dataset}_${method} ${ValDataset} $FTcmd
+    done
 fi
 
+
 if [[ "${tasks[@]}" =~ "adapt_full" ]]; then
-for ValDataset in $ValDatasets
-do
-python3 finetune.py \
-        --clip_arch ViT-B/16 \
-        --from_pretrained output/adapt/${alias}_${dataset}_${method} \
-        --folder ${ValDataset}_subsets/100% \
-        --ckpt_name ${ValDataset}_best.pth \
-        --dataset ${ValDataset} \
-        --pickle \
-        $FTcmd
-done
+    for ValDataset in $ValDatasets
+    do
+        python3 finetune.py \
+                --clip_arch ViT-B/16 \
+                --from_pretrained output/adapt/${alias}_${dataset}_${method} \
+                --folder ${ValDataset}_subsets/100% \
+                --ckpt_name ${ValDataset}_best.pth \
+                --dataset ${ValDataset} \
+                --pickle \
+                $FTcmd
+    done
 fi
