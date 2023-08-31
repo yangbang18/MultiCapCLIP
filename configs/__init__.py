@@ -180,11 +180,14 @@ def create_config(args, mode='adapt'):
         if getattr(args, 'subset_fn', None) is not None:
             data_config['train_file'] = os.path.join(finetune_root, args.dataset, eval_lang, 'subsets', args.subset_fn)
 
-            
+        # speedup training if specified
         if getattr(args, 'pickle', False):
             clip_arch = getattr(args, 'clip_arch', None)  or basic_config['clip_arch']
             clip_arch = clip_arch.lower().replace('/', '-')
             data_config['pickle_path'] = getattr(args, 'pickle_path', None) or os.path.join(feats_root, f'{clip_arch}_image/{args.dataset}.pkl')
+            if not os.path.exists(data_config['pickle_path']):
+                # avoid bug if the pickle file does not exist
+                data_config['pickle_path'] = None
 
         # where to load images or videos
         data_config['root'] = getattr(args, 'root', None) or image_video_root[args.dataset]
