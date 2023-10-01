@@ -108,8 +108,8 @@ python show.py --root output/adapt --csv_path results/ --csv_fn adapt.csv
 <summary>Main</summary>
 
 ```
-bash scripts/pipe.sh coco baseline "finetune finetune_fewshot"
-bash scripts/pipe.sh msrvtt baseline "finetune finetune_fewshot"
+bash scripts/pipe.sh coco baseline "finetune"
+bash scripts/pipe.sh msrvtt baseline "finetune"
 bash scripts/pipe.sh vatex baseline#zh-zh "finetune"
 
 bash scripts/pipe.sh coco baseline "adapt adapt_zeroshot" "coco msrvtt"
