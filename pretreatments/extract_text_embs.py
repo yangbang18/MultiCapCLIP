@@ -10,7 +10,7 @@ import pandas as pd
 
 import configs
 
-from CLIP import clip
+import clip
 from tqdm import tqdm
 
 

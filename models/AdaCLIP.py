@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from CLIP import clip
+import clip
 
 from transformers import BertConfig, BertTokenizer
 from PIL import Image

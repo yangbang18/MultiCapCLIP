@@ -9,7 +9,7 @@ import pickle
 import json
 import decord
 
-from CLIP import clip
+import clip
 from tqdm import tqdm
 from PIL import Image
 

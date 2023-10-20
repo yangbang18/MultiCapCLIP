@@ -29,21 +29,13 @@ PyTroch implementation of our ACL'23 paper:
 
 
 ## Environment
-Clone and enter the repo:
-```
-git clone https://github.com/yangbang18/MultiCapCLIP.git --recurse-submodules
-cd MultiCapCLIP
-
-# Alternatively
-git clone https://github.com/yangbang18/MultiCapCLIP.git
-cd MultiCapCLIP
-git submodule update --init
-```
-
 We run the code based on `Python` 3.8.8, `torch` 1.13.1, and `cuda` 11.7. Please change the version of torch and cuda according to your hardwares.
 ```
-conda create -n MultiCapCLIP python==3.8.8
-conda activate MultiCapCLIP
+git clone https://github.com/yangbang18/MultiCapCLIP.git
+cd MultiCapCLIP
+
+conda create -n zerovc python==3.8.8
+conda activate zerovc
 
 # Install a proper version of torch, e.g.:
 pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1+cu117  -f https://download.pytorch.org/whl/cu117/torch_stable.html

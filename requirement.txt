@@ -1,7 +1,6 @@
-torch
-torchvision
+git+https://github.com/openai/CLIP.git
+
 transformers==4.12.5
-ftfy
 ruamel_yaml
 decord
 pandas
