@@ -3,6 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 import clip
+import configs
+import numpy as np
+import transformers
 
 from transformers import BertConfig, BertTokenizer
 from PIL import Image
@@ -10,9 +13,6 @@ from PIL import Image
 from models.language_model import LanguageModel, LanguageModelWithCrossAttention
 from models.prompt_learner import build_prompt_learner
 from models.clip_projecter import build_clip_projecter
-
-import configs
-import numpy as np
 
 
 class AdaCLIP(nn.Module):
@@ -420,16 +420,16 @@ class AdaCLIP(nn.Module):
         if num_beams > 1:
             assert (sample is False) and (num_return_sequences == 1)
             if prompt_feats is not None:
-                prompt_feats = prompt_feats.repeat_interleave(num_beams, dim=0)
+                prompt_feats = self._repeat_wisely(prompt_feats, num_beams)
             if encoder_hidden_states is not None:
-                encoder_hidden_states = encoder_hidden_states.repeat_interleave(num_beams, dim=0)
+                encoder_hidden_states = self._repeat_wisely(encoder_hidden_states, num_beams)
 
         if num_return_sequences > 1:
             assert (sample is True) and (num_beams == 1)
             if prompt_feats is not None:
-                prompt_feats = prompt_feats.repeat_interleave(num_return_sequences, dim=0)
+                prompt_feats = self._repeat_wisely(prompt_feats, num_beams)
             if encoder_hidden_states is not None:
-                encoder_hidden_states = encoder_hidden_states.repeat_interleave(num_return_sequences, dim=0)
+                encoder_hidden_states = self._repeat_wisely(encoder_hidden_states, num_beams)
             prompt = [self.prompt] * (batch_size * num_return_sequences)
 
         model_kwargs = {
@@ -486,3 +486,15 @@ class AdaCLIP(nn.Module):
 
             return _get_captions(outputs)
 
+    def _repeat_wisely(self, tensor, num_beams, dim=0):
+        if not hasattr(self, "should_repeat"):
+            self.should_repeat = True
+            version = [int(item) for item in transformers.__version__.split('.')]
+            if version[0] > 4 or (version[0] == 4 and version[1] >=27):
+                # after 4.27.0, we should not repeat encoder's outputs by `num_beams` * `num_return_sequences` times
+                self.should_repeat = False
+        
+        if self.should_repeat:
+            tensor = tensor.repeat_interleave(num_beams, dim=dim)
+        
+        return tensor
