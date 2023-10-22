@@ -66,12 +66,62 @@ The `data` folder contains the following subfolders:
 - The `concepts` folder contains concept files (`.txt`) extracted from the English captions of each dataset and language.
 - The `related_caption_ids` folder records indexes of captions of similar semantics for each caption. 
 - The `stanford-corenlp-4.5.2` folder has files for segmenting English, German, and French sentences. See [utils/eval.py](/utils/eval.py) for details.
-- Other folders that stores the raw images or videos, e.g., `data/MSCOCO/train2014/*.jpg` (see the variable `image_video_root` in [configs](/configs/__init__.py)). Here are some official or shared links to download raw images or videos: 
-    - MSCOCO: [official link](https://cocodataset.org/)
-    - Flickr30k: [official link](http://shannon.cs.illinois.edu/DenotationGraph/data/index.html)
-    - MSRVTT: [official link](http://ms-multimedia-challenge.com/2016/dataset) (which seems to be expired); [shared link](https://www.mediafire.com/folder/h14iarbs62e7p/shared)
-    - VATEX: [official link](https://eric-xw.github.io/vatex-website/download.html)
+- Other folders that stores the raw images or videos, e.g., `data/MSCOCO/train2014/*.jpg` (see the variable `image_video_root` in [configs](/configs/__init__.py) and the below structure).
+    ```
+    data
+    ├── MSCOCO
+    │   ├── train2014
+    │   │   └── *.jpg
+    │   └── val2014
+    │       └── *.jpg
+    ├── Flickr30k
+    │   └── flickr30k-images   
+    │       └── *.jpg
+    ├── MSRVTT
+    │   └── all_videos   
+    │       ├── video0.mp4
+    │       ├── ...
+    │       └── video9999.mp4
+    └── VATEX
+        └── all_videos   
+            ├── video0.mp4
+            ├── ...
+            └── video34990.mp4
+    ```
 
+ Here are official or shared links to download raw images or videos: 
+    <div align="center">
+<table border="1" width="100%">
+    <tr align="center">
+        <th>Datasets</th><th>Official Link</th><th>Shared Link (Others)</th><th>Shared Link (Ours)</th>
+    </tr>
+    <tr align="center">
+        <td>MSCOCO</td><td><a href="https://cocodataset.org/">Link</a></td><td><a href="https://github.com/OFA-Sys/ONE-PEACE/blob/main/datasets.md">Link</a></td><td>N/A</td>
+    </tr>
+    <tr align="center">
+        <td>Flickr30k</td><td><a href="http://shannon.cs.illinois.edu/DenotationGraph/data/index.html">Link</a></td><td><a href="https://github.com/OFA-Sys/ONE-PEACE/blob/main/datasets.md">Link</a></td><td>N/A</td>
+    </tr>
+    <tr align="center">
+        <td>MSRVTT</td><td><a href="http://ms-multimedia-challenge.com/2016/dataset">Link (expired)</a></td><td><a href="https://www.mediafire.com/folder/h14iarbs62e7p/shared">Link</a></td><td>N/A</td>
+    </tr>
+    <tr align="center">
+        <td>VATEX</td><td><a href="https://eric-xw.github.io/vatex-website/download.html">Link</a></td><td>N/A</td><td><a href="https://pkueducn-my.sharepoint.com/:u:/g/personal/2101112290_pkueducn_onmicrosoft_com/EbznKwMvV-1FsxxxRvbiu1cB5aC-NTspM1y5zkyJq6rZSQ?e=IcpHpT">Onedrive</a>, <a href="https://disk.pku.edu.cn:443/link/24892F356463CB7AC6B762ACC7757035">PKU Yun</a> (37.3G)</td>
+    </tr>
+</table>
+</div>
+
+**Note:** 
+- After downloading, please reformat the data to follow the above structure. 
+- Considering the difficulties to download raw VATEX videos, we share them!
+- The official train/val/test splits of VATEX is 25,991: 3,000: 6,000. However, some video clips are no longer available, resulting in the splits 25,006: 2,893: 5,792 (in our case). The same splits are used in our other papers, check them out if you are interested ✨: 
+
+    > [**Concept-Aware Video Captioning: Describing Videos With Effective Prior Information**](https://ieeexplore.ieee.org/abstract/document/10233200/)<br>
+    > Accepted by IEEE Transactions on Image Processing | [[Code]](https://github.com/yangbang18/CARE)<br>
+    > Bang Yang, Meng Cao and Yuexian Zou
+
+    > [**CLIP Meets Video Captioning: Concept-Aware Representation Learning Does Matter**](https://arxiv.org/abs/2111.15162)<br>
+    > Accepted by PRCV 2022 | [[Code]](https://github.com/yangbang18/CLIP-Captioner)<br>
+    > Bang Yang, Tong Zhang and Yuexian Zou
 
 
 ## From-Scratch Preparation

@@ -25,7 +25,9 @@ PyTroch implementation of our ACL'23 paper:
 
 
 ## Update Notes
-[2023-08-28] We release the code and data.
+**[2023-10-22]** Update links for downloading raw images and videos in [README_DATA.md](/README_DATA.md).
+
+**[2023-08-28]** We release the code and data.
 
 
 ## Environment
