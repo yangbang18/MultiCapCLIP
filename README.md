@@ -59,7 +59,7 @@ method="baseline"
 tasks="adapt adapt_zeroshot"
 val_datasets="coco msrvtt"
 
-bash scripts/pipe.sh $train_dataset $method $tasks $val_datasets
+bash scripts/pipe.sh $train_dataset $method "$tasks" "$val_datasets"
 ```
 In the above command, we make the baseline model auto-encode on MSR-VTT's training captions first (`adapt`), and then evaluate on MS-COCO (out-of-domain) and MSR-VTT (in-donmain) (`adapt_zeroshot`).
 
@@ -82,7 +82,7 @@ method="baseline#de-de"
 tasks="adapt adapt_zeroshot"
 val_datasets="flickr30k"
 
-bash scripts/pipe.sh $train_dataset $method $tasks $val_datasets
+bash scripts/pipe.sh $train_dataset $method "$tasks" "$val_datasets"
 ```
 Different from the monolingual command, we append a postfix `#A-B` to the method:
 - `#` activates the multilingual mode, where we use `bert-base-multilingual-cased`'s vocab rather than that of `bert-base-uncased` to embed tokens. See [configs](/configs/__init__.py) for more details.
@@ -199,11 +199,15 @@ Please **[★star]** this repo and **[cite]** the following papers if you feel o
     pages = "11908--11922",
 }
 
-@article{Yang2023ZeroNLG,
-   title={{Z}ero{NLG}: Aligning and Autoencoding Domains for Zero-Shot Multimodal and Multilingual Natural Language Generation},
-   author={Yang, Bang and Liu, Fenglin and Zou, Yuexian and Wu, Xian and Wang, Yaowei and Clifton, David A.},
-   journal={arXiv preprint arXiv:2303.06458}
-   year={2023}
+@ARTICLE{Yang2024ZeroNLG,
+  author={Yang, Bang and Liu, Fenglin and Zou, Yuexian and Wu, Xian and Wang, Yaowei and Clifton, David A.},
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  title={ZeroNLG: Aligning and Autoencoding Domains for Zero-Shot Multimodal and Multilingual Natural Language Generation}, 
+  year={2024},
+  volume={46},
+  number={8},
+  pages={5712-5724},
+  doi={10.1109/TPAMI.2024.3371376}
 }
 ```
 
