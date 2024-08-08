@@ -105,7 +105,7 @@ The `data` folder contains the following subfolders:
         <td>MSRVTT</td><td><a href="http://ms-multimedia-challenge.com/2016/dataset">Link (expired)</a></td><td><a href="https://www.mediafire.com/folder/h14iarbs62e7p/shared">Link</a></td><td>N/A</td>
     </tr>
     <tr align="center">
-        <td>VATEX</td><td><a href="https://eric-xw.github.io/vatex-website/download.html">Link</a></td><td>N/A</td><td><a href="https://pkueducn-my.sharepoint.com/:u:/g/personal/2101112290_pkueducn_onmicrosoft_com/EbznKwMvV-1FsxxxRvbiu1cB5aC-NTspM1y5zkyJq6rZSQ?e=IcpHpT">Onedrive</a>, <a href="https://disk.pku.edu.cn:443/link/24892F356463CB7AC6B762ACC7757035">PKU Yun</a> (37.3G)</td>
+        <td>VATEX</td><td><a href="https://eric-xw.github.io/vatex-website/download.html">Link</a></td><td>N/A</td><td><a href="https://pkueducn-my.sharepoint.com/:u:/g/personal/2101112290_pkueducn_onmicrosoft_com/EbznKwMvV-1FsxxxRvbiu1cB5aC-NTspM1y5zkyJq6rZSQ?e=IcpHpT">Onedrive</a>, <a href="https://disk.pku.edu.cn/link/AA70A2F20E92AA48F48153C82119347504">PKU Yun</a> (37.3G)</td>
     </tr>
 </table>
 </div>
